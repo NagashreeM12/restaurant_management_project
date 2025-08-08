@@ -21,3 +21,9 @@ def home(request):
     """)
 
 # Create your views here.
+def home(request):
+    context={
+        'restaurant_name':'Delightful Bites'
+        
+    }
+    return render(request,'home.html',context)
