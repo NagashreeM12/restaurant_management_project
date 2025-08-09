@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import Http404
-# Create your views here.
-def test_404_view(request):
-    raise Http404("This page does not exist")
+from django.conf import settings
+def homepage(request):
+    phone_number=getattr(settings,'RESTAURANGT_PHONE','N/A')
+    return render(request,'home/index.html',{'phone_number':phone_number})
