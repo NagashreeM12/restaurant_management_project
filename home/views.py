@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.conf import settings
 def home(request):
     return HttpResponse("""
     <html>
@@ -22,10 +22,10 @@ def home(request):
 
 # Create your views here.
 def home(request):
-    context={
-        'restaurant_name':'Delightful Bites'
-        
-    }
-    return render(request,'home.html',context)
-def contact(request):
-    return render(request,'contact.html')
+    #read from settings with safe fallback
+    restaurant_name=getattr(settings,'RESTAURANT_NAME','My Restaurant')
+    phone_number=getattr(settings,'RESTAURANT_PHONE','N/A')
+    return render(request,'home/index.html',{
+        'restaurant_name':restaurant_name,
+        'phone_number':phone_number,
+        })
