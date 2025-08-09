@@ -57,6 +57,13 @@
             <h2> Delicious food made with love </h2>
             <p> Come and explore our unique dishes and warm ambience </p>
         </div>
+        <div class="contact">
+            Phone:<a class="tel" href="tel:{{phone_number}}">{{phone_number}}</a>
+        </div>
+        <div style="margin-top:16px;">
+            <a href="{% url 'menu" %}" style="text-decoration:none;padding:10px 16px background:#ff7043;color:#fff;border-radius:6px;">View Menu</a>
+            <a href="{% url 'contact' %}" style="text-decoration":none;padding:10px 16px;margin-left:8px;border-radius:6px;border:1px solid #ddd;">Contact</a>
+    
         <div class="footer">
             <p>&copy:2025 My Restaurant </p>
         </div>
