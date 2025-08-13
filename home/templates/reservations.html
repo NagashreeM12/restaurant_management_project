@@ -4,9 +4,45 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width,initial-scale=1.0">
         <title>Reservations</title>
+        <!--Basic inline styling  for simplicity -->
+        <style>
+            body {
+            font-family:Arial,sans-serif;
+            margin:0;
+            padding:0;
+            min-height:100vh;
+            display:flex;
+            flex-direction:column;
+            }
+            main {
+            flex:1;
+            padding:20px;
+            text-align:center;
+            }
+            footer {
+            background-color:#f4f4f4;
+            border-top:1px solid #ddd;
+            text-align:center;
+            padding:10px 0;
+            font-size:0.9rem;
+            color:#555;
+            }
+        </style>
     </head>
     <body>
-        <h1>Reservations</h1>
-        <p>Our online reservation system will be available soon.Please check back later</p>
+        <!--Main Content area-->
+        <main>
+            <h1>Reservation</h1>
+            <p>Our online reservation system will be available soon.Please check back later</p>
+        </main>
+        <!--Footer :Displays copyright to notice with the current year-->
+        <footer>
+            &copy:<span id="year"></span>My Restaurant.All rights reserved
+        </footer>
+        <!--Script to automatically update the year-->
+        <script>
+            document.getElementById("year").textContent=new Date().getFullYear();
+        </script>
     </body>
 </html>
+    
