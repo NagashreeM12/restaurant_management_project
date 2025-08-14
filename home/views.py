@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.conf import settings
+from django.http import HttpResponse
+from.models import home,restaurant_management
 def home(request):
     return HttpResponse("""
     <html>
@@ -21,11 +23,12 @@ def home(request):
     """)
 
 # Create your views here.
-def home(request):
-    #read from settings with safe fallback
-    restaurant_name=getattr(settings,'RESTAURANT_NAME','My Restaurant')
-    phone_number=getattr(settings,'RESTAURANT_PHONE','N/A')
-    return render(request,'home/index.html',{
-        'restaurant_name':restaurant_name,
-        'phone_number':phone_number,
-        })
+def example_view(request):
+    try:
+        data=restaurant_management.objects.all()
+        return render(request,'home/example.html',{'data':data})
+    except restaurant_management.DoesNotExist:
+        return HttpResponse("No data found" ,status=404)
+    except Exception as e:
+        #Log the error in real projects
+        return HttpResponse(f"An unexpected error occured:{str(e}}",status=500)
