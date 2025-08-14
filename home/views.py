@@ -23,12 +23,5 @@ def home(request):
     """)
 
 # Create your views here.
-def example_view(request):
-    try:
-        data=restaurant_management.objects.all()
-        return render(request,'home/example.html',{'data':data})
-    except restaurant_management.DoesNotExist:
-        return HttpResponse("No data found" ,status=404)
-    except Exception as e:
-        #Log the error in real projects
-        return HttpResponse(f"An unexpected error occured:{str(e}}",status=500)
+def reservations(request):
+    return render(request,'home/reservations.html',{'year':datetime.now().year})
