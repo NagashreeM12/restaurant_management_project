@@ -1,3 +1,4 @@
+{ % load static % }
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -55,6 +56,33 @@
             font-size:0.9rem;
             color:#555;
             }
+            .container {
+            max-width:960px;
+            margin:48px auto;
+            padding:32px 24px;
+            background:#fff;
+            border-radius:12px;
+            box-shadow:0 8px 24px rgba(0,0,0,.6);
+            text-align:center;
+            }
+            /* Make the logo prominent */
+            .logo {
+            display :inline-block;
+            width:220px;
+            max-width:80%;
+            height:auto;
+            margin-bottom:16px;
+            filter:drop-shadow(0 4x 12px rgba(0,0,0,.08))
+            }
+            h1 {
+            margin:8px 0 12px;
+            color:#2c3e50;
+            }
+            p {
+            font-size:1.05rem;
+            line-height:1.6;
+            margin:0 0 12px;
+            }
         </style>
     </head>
     <body>
@@ -67,7 +95,7 @@
             <h1> Welcome to Our Restaurant </h1>
             <p>Enjoy fresh ingredients,delicious meals and warm hospitality</p>
             <a href="/menu/" class="btn">View Menu</a>
-        </main>
+        
         <!--Footer:Displays copyright year-->
         <footer>
             &copy;<span id="year" ></span>Our Restaurant.All rights reserved
@@ -75,5 +103,11 @@
         <script>
             document.getElementById('year')
         </script>
+        <img 
+        class="logo"
+        src="{% static 'home/logo.png' %}"
+        alt="Restaurant Logo"
+        />
+        </main>
     </body>
 </html>
