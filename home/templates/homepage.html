@@ -2,112 +2,25 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width,initial-scale=1.0">
-        <title>Homepage</title>
-        <!--Basic styling for homepage-->
-        <style>
-            /* Global styles for body */
-            body {
-            font-family:Arial,sans-serif;
-            margin:0;
-            padding:0;
-            min-height:100vh;
-            display:flex;
-            flex-direction:column;
-            background-color:#f8f9a;
-            color:#333;
-            }
-            /* Main Container */
-            main {
-            flex:1;
-            padding:30px;
-            text-align:center;
-            }
-            /* Heading style */
-            h1 {
-            color:#2c3e50;
-            margin-bottom:20px;
-            }
-            /*Paragraph style */
-            P {
-            font-size:1.1rem;
-            margin-bottom:20px;
-            line-height:1.6;
-            }
-            /* Button Style */
-            .btn {
-            background-color:#3498db;
-            color:white;
-            padding:10px 20px;
-            text-decoration:none;
-            border-radius:5px;
-            font-weight:bold;
-            }
-            .btn hover {
-            background-color:#2980b9;
-            }
-            /*Footer styling*/
-            footer {
-            background-color:#f4f4f4;
-            border-top:1px solid #ddd;
-            text-align:center;
-            padding:10px 0;
-            font-size:0.9rem;
-            color:#555;
-            }
-            .container {
-            max-width:960px;
-            margin:48px auto;
-            padding:32px 24px;
-            background:#fff;
-            border-radius:12px;
-            box-shadow:0 8px 24px rgba(0,0,0,.6);
-            text-align:center;
-            }
-            /* Make the logo prominent */
-            .logo {
-            display :inline-block;
-            width:220px;
-            max-width:80%;
-            height:auto;
-            margin-bottom:16px;
-            filter:drop-shadow(0 4x 12px rgba(0,0,0,.08))
-            }
-            h1 {
-            margin:8px 0 12px;
-            color:#2c3e50;
-            }
-            p {
-            font-size:1.05rem;
-            line-height:1.6;
-            margin:0 0 12px;
-            }
-        </style>
+        <meta charset="UTF-8 "/>
+        <meta name="viewport" content="="width=device-width,initial-scale=1.0"/>
+        <title> Restaurant Homepage </title>
+        <!--Link to your static CSS-->
+        <link rel="stylesheet" href="{% static 'home/css/home.css' %}">
     </head>
     <body>
         <header>
-            <img src="{% static 'home/logo.png' %}" alt="Restaurant Logo"
-            </header>
-    
-        <!--Main content area-->
+            <h1>Welcome to our Restaurant</h1>
+        </header>
         <main>
-            <h1> Welcome to Our Restaurant </h1>
-            <p>Enjoy fresh ingredients,delicious meals and warm hospitality</p>
-            <a href="/menu/" class="btn">View Menu</a>
-        
-        <!--Footer:Displays copyright year-->
-        <footer>
-            &copy;<span id="year" ></span>Our Restaurant.All rights reserved
-        </footer>
-        <script>
-            document.getElementById('year')
-        </script>
-        <img 
-        class="logo"
-        src="{% static 'home/logo.png' %}"
-        alt="Restaurant Logo"
-        />
+            <!--If you have a logo file at home/static/home/logo.png,show it-->
+            <img src="{% static 'home/logo.png' %}" class="logo" alt="Restaurant Logo">
+            <p>Fresh ingredients,warm hospitality ,and your favourite dishes -every day.</p>
         </main>
+        <!--Optional Footer if you want it here -->
+        <footer>&copy;<span id="year"></span> Your Restaurant</footer>
+        <script>document.getElementById('year').textContent=new Data().getFullYear();</script>
     </body>
 </html>
+
+
