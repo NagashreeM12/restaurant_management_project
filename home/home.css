@@ -1,0 +1,51 @@
+/* Basic homepage styling */
+/* Page base */
+body {
+    font-family:Arial,sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding:0;
+    color:#333;
+
+}
+/* Top banner */
+header {
+    background-color:#ff6347;
+    color:#fff;
+    text-align:center;
+    padding:24px 12px;
+}
+/* Main content card */
+main {
+    max-width:960px;
+    margin:40px auto;
+    background:#fff;
+    padding:32px;
+    border-radius:10px;
+    box-shadow:0 8px 18px rgba(0,0,0,0.08);
+    text-align: center;
+}
+/* Optional logo */
+img.logo {
+    max-width:200px;
+    height:auto;
+    margin-bottom: 16px;
+}
+/* Headings & text */
+h1 {
+    margin:0 0 12px 0;
+    font-size:2rem;
+}
+p {
+    font-size:1.1rem;
+    line-height:1.6;
+    margin:0 0 18px 0;
+}
+/* Simple footer */
+footer {
+    text-align:center;
+    font-size:0.95rem;
+    color:#666;
+    padding:14px 10px;
+}
+
