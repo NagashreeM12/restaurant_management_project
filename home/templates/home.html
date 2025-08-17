@@ -1,4 +1,33 @@
-<!DOCTYPE html>
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<div style="max-width:900px;margin:0 auto:padding:24px;text-align:center;">
+    <h1 style="margin-bottom:16px;">Welcome to our Restaurant</h1>
+    <!--searchbar-->
+    <form method="get" action="" aria-label="Search menu" style="display:inline-flex;gap:8px;">
+        <input 
+        type="text"
+        name="q"
+        id="q"
+        placeholder="Search menu items.."
+        aria-label="Search menu items"
+        style="padding:10px 12px;width:280px;border:1px solid #ccc;border-radius:6px;outline:none;"
+        />
+        <button
+        type="submit"
+        style="padding:10px 16px;border:none;border-radius:6px;background:#4CAF50;color:#fff;cursor:pointer;"
+        >
+        Search
+        
+        <</button>
+        
+    </form>
+    <p style="margin-top:10px;color:#666;font-size:0.95rem;">
+        Try typing:<em>pizza</em>,<em>pasta</em>,<em>salad</em>
+    </p>
+    </div>
+    {% endblock %}
+    <!DOCTYPE html>
 <html>
     <head>
         <title>Restaurant Homepage </title>
