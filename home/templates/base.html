@@ -1,35 +1,23 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html>
     <head>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width,initial-scale=1.0">
-        <title>{ % block title % }My Site {% endblock % }</title>
-        <style>
-            body {
-            margin:0;
-            font-family:Arial,sans-serif;
-            min-height:100vh;
-            display:flex;
-            flex-direction:column;
-            }
-            main {
-            flex:1;
-            }
-            footer {
-            background-color:#333;
-            color:white;
-            text-align:center;
-            padding:10px 0;
-            }
-        </style>
+        <title>{% block title % }Restaurant{% endblock %}</title>
+        <link rel="stylesheet" href="{% static 'home/css/home.css' %}">
     </head>
     <body>
-        <main>
-            {% block content % } {% endblock % }
-        </main>
+        <!--Main Content-->
+        <div class="content">
+            {% block content %}{% endblock %}
+        </div>
+        <!--Footer-->
         <footer>
-            &copy:{{year }} My Website.All rights reserved.
+            <p>&copy;{{now.year}}My Restaurant</p>
+            <p>Opening Hours:Mon-Fri:11am-9pm|Sat-Sun:10am-10pm</p>
         </footer>
     </body>
+
 </html>
+    
 
