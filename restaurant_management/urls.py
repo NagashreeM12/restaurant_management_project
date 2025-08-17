@@ -23,5 +23,7 @@ urlpatterns = [
     path('api/accounts/',include('account.urls')),
     path('api/products/',include('products.urls')),
     path('api/orders/',include('orders.urls')),
-    path('',homepage,name='home')
+    path('',homepage,name=)
+    path('feedback/',views.feedback_view,name='feedback'),
+    path('feedback/success/',views.feedback_success,name='feedback_success'),
 ]
