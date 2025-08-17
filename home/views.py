@@ -1,4 +1,5 @@
-from datetime import datetime
-def get_current_year(request):
-    return {'current_year':datetime.now().year}
+from django.shortcuts import render
+def home(request):
+    #For now we just render the template;no search logic yet
+    return render(request,"home/home.html")
 
