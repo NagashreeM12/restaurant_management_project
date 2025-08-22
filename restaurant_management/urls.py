@@ -26,4 +26,5 @@ urlpatterns = [
     path('',homepage,name=)
     path('feedback/',views.feedback_view,name='feedback'),
     path('feedback/success/',views.feedback_success,name='feedback_success'),
+    path('menu/',MenuView.as_view(),name='menu')
 ]
