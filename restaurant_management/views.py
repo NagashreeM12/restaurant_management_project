@@ -1,7 +1,12 @@
-from django.shortcuts import render,redirect
-from.form import FeedbackForm
-from.models import FeedbackForm
-#View to handle feedback form submission
-def feedback_view(request):
-    if request.method=="POST":
-        form=Feedbak
+from rest_framework.views import APIView
+from rest_framework.response import Response
+class MenuView(APIView):
+    def get(self,request):
+        #Hardcoded menu data
+        menu=[
+            {"name":"Margherita Pizza","description":"Classic cheese and tomato pizza","price":8.99},
+            {"name":"Pasta Alfredo","description":"Creamy Pasta with Alfredo sauce","price":10.50},
+            {"name":"Caesar Salad","description":"Fresh lettuce with Caesar dressing","price":6.75},
+            {"name":"Grilled chicken","description":"Served with veggies and fries","price":12.00},
+        ]
+        return Response(menu)
