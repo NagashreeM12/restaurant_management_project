@@ -1,7 +1,14 @@
 from django.shortcuts import render
-from products.models import Menu #Import Menu model
-def home(request):
-    menu_items=Menu.objects.all() #Get all menu items from DB
-    return render(request,'home/index.html',{'menu_items':menu_items})
+from .forms import ContactForm
+def home_view(request):
+    if request.method=="POST":
+        form=ContactForm(request.POST)
+        if form.is_valid():
+            form.save()#save to database
+            return redirect("home") #redirect to homepage after submission
+        else:
+            form=ContactForm()
+        return render(request,"home/index.html",{"form":form})
+    
 
 
