@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Restaurant Home</title>
+    </head>
+    <body>
+        <h1>Welcome to Our Restaurant</h1>
+        <h2>Contact Us</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{form.as_p}}
+            <button type="submit">Submit</button>
+        </form>
+    </body>
+</html>
