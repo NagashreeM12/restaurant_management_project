@@ -28,6 +28,7 @@ urlpatterns = [
     path('feedback/',views.feedback_view,name='feedback'),
     path('feedback/success/',views.feedback_success,name='feedback_success'),
     path('menu/',MenuView.as_view(),name='menu')
+    path('products/',include('products.urls'))
 ]
 if settings.DEBUG:
     urlpatterns+=static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
