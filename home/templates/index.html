@@ -1,29 +1,14 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Restaurant Home</title>
-    </head>
-    <body>
-        <h1>Welcome to Our Restaurant</h1>
-        <h2>Contact Us</h2>
-        <form method="post">
-            {% csrf_token %}
-            {{form.as_p}}
-            <button type="submit">Submit</button>
-        </form>
-        <!--restaurant address section-->
-        <h2>Our Location</h2>
-        <p>123 Food Street,Downtown City,Country</p>
-        <!--Embedded Google Map-->
-        <!--To customize,search your address in google maps,click 'share'>
-        <iframe
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1s3153."
-        width="600"
-        height="450"
-        style="border:0;"
-        allowfullscreen=""
-        loading="lazy"
-        refferrerpolicy="no-referrer-when-downgrade">
-        </iframe>
-    </body>
-</html>
+{% extends "base.html" %}
+{% block content %}
+<!--existing homepage content-->
+<div style="margin-top:30px;padding:15px;border:1px solid #ddd;border-radius:8px;">
+    <h2>Our Address</h2>
+    {% if restaurant %}
+    <p>{{ restaurant.address }},</p>
+    <p>{{ restaurant.city }},{{ restaurant.state }}-{{restaurant.zipcode }}</p>
+    {% else %}
+    <p>Address not available</p>
+    {% endif %}
+</div>
+{% endblock %}
+
