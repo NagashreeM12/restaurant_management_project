@@ -1,4 +1,5 @@
 from django.contrib import admin
 from .models import RestaurantAddress
 # Register your models here.
-admin.site.register(RestaurantAddress)
+class RestaurantAddressAdmin(admin.ModelAdmin):
+    list_display=("street","city","state","zipcode")
