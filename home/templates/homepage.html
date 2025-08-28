@@ -1,26 +1,14 @@
-{ % load static % }
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8 "/>
-        <meta name="viewport" content="="width=device-width,initial-scale=1.0"/>
-        <title> Restaurant Homepage </title>
-        <!--Link to your static CSS-->
-        <link rel="stylesheet" href="{% static 'home/css/home.css' %}">
-    </head>
-    <body>
-        <header>
-            <h1>Welcome to our Restaurant</h1>
-        </header>
-        <main>
-            <!--If you have a logo file at home/static/home/logo.png,show it-->
-            <img src="{% static 'home/logo.png' %}" class="logo" alt="Restaurant Logo">
-            <p>Fresh ingredients,warm hospitality ,and your favourite dishes -every day.</p>
-        </main>
-        <!--Optional Footer if you want it here -->
-        <footer>&copy;<span id="year"></span> Your Restaurant</footer>
-        <script>document.getElementById('year').textContent=new Data().getFullYear();</script>
-    </body>
-</html>
+{% extends "base.html" %}
+{% block content %}
+<div style="margin:20px;padding:10px;border:1px solid #ccc;">
+    <h2> Our Address </h2>
+    {% if address %}
+    <p>{{address.street }}</p>
+    <p>{{address.city }},{{address.state }}-{{ address.zipcode }}</p>
+    {% else %}
+    <p>Address not available </p>
+    {% endif %}
+    </div>
+    {% endblock %}
 
 
