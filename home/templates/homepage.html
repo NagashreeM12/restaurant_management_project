@@ -5,7 +5,17 @@
     {% if address %}
     <p>{{address.street }}</p>
     <p>{{address.city }},{{address.state }}-{{ address.zipcode }}</p>
+    <h3 style="margin-top:20px:">Opening Hours</h3>
+    {% if address.opening_hours %}
+    <ul>
+        {% for day,time in address.opening_hours.items %}
+        <li><strong>{{ day }}:</strong>{{ time }}</li>
+        {% endfor %}
+    </ul>
     {% else %}
+    <p>Opening hours not available
+        {% endif %}
+        {% else %}
     <p>Address not available </p>
     {% endif %}
     </div>
