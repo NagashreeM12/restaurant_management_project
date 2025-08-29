@@ -1,14 +1,20 @@
-{% extends "base.html" %}
-{% block content %}
-<!--existing homepage content-->
-<div style="margin-top:30px;padding:15px;border:1px solid #ddd;border-radius:8px;">
-    <h2>Our Address</h2>
-    {% if restaurant %}
-    <p>{{ restaurant.address }},</p>
-    <p>{{ restaurant.city }},{{ restaurant.state }}-{{restaurant.zipcode }}</p>
-    {% else %}
-    <p>Address not available</p>
-    {% endif %}
-</div>
-{% endblock %}
-
+<h2>Menu</h2>
+<!--Search bar-->
+<form method="get" action="">
+    <input type="text" name="q" placeholder="Search menu..." value="{{query|default: ''}}">
+    <button type="submit">Search </button>
+</form>
+<hr>
+{% for item in menu_items %}
+<div class="menu-items">
+    <h3>{{ item.name }}</h3>
+    <p>{{ item.description }}</p>
+    <p>{{ item.price }}</p>
+    {% if item.image % }
+    <img src="{{ item.image.url }} "alt="{{ item.name }} "width="150">
+    {% endif % }
+    </div>
+    {% empty % }
+    <p>No menu items found </p>
+    {% endfor %}
+    
