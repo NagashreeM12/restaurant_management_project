@@ -1,12 +1,6 @@
 #home/forms.py
-from django.shortcuts import render,redirect
-from.forms import ContactForm
-def contact_view(request):
-    if request.method=='POST':
-        form=ContactForm(request.POST)
-        if form.is_valid():
-            form.save() #save to database
-            return redirect('contact') #redirect after success
-        else:
-            form=ContactForm()
-        return render(request,'home/contact.html',{'form':form})
+from django import forms
+class ContactForm(forms.Form):
+    name=forms.CharField(max_length=100)
+    email=forms.EmailField()
+    message=forms.CharField(widget=forms.Textarea)
