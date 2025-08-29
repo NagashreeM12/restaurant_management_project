@@ -1,0 +1,12 @@
+{ % for item in menu_items % }
+<div class="menu_item">
+    <h3>{{ item.name }}</h3>
+    <p>{{ item.description }}</p>
+    <p>Price: {{ item.price }}</p>
+    { % if item.image % }
+    <img src="{{item.image.url}}"alt="{{ item.name }}"width="200">
+    {% else % }
+    <p>No image available </p>
+    {% endif %}
+    </div>
+    {% endfor %}
