@@ -1,8 +1,5 @@
 from django.urls import path
-from.views import contact_view
+from.views import home_view
 urlpatterns=[
-    path('contact/',contact_view,name='contact'),
-    path('contact/success/',lambda request:render(request,"home/contact_success.html"),name='contact_success'),
-    
-]
+    path('',home_view,name='home'),
 ]
