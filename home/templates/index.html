@@ -1,25 +1,19 @@
-<h2>Menu</h2>
-<!--Search bar-->
-<form method="get" action="">
-    <input type="text" name="q" placeholder="Search menu..." value="{{query|default: ''}}">
-    <button type="submit">Search </button>
-</form>
-<hr>
-{% for item in menu_items %}
-<div class="menu-items">
-    <h3>{{ item.name }}</h3>
-    <p>{{ item.description }}</p>
-    <p>{{ item.price }}</p>
-    {% if item.image % }
-    <img src="{{ item.image.url }} "alt="{{ item.name }} "width="150">
-    {% endif % }
-    </div>
-    {% empty % }
-    <p>No menu items found </p>
-    {% endfor %}
-    <div>
-    <h1>Welcome to our Store</h1>
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Homepage</title>
+</head>
+<body>
+    <h1>Welcome to Our Store!</h1>
+
+    <!-- Display the total number of items in the cart -->
     <p>Total Items in Cart: {{ cart_count }}</p>
-</div>
+
+    <!-- Other content of the homepage -->
+
+</body>
+</html>
+
 
     

@@ -1,8 +1,10 @@
+# urls.py
 from django.urls import path
-from .views import add_to_cart, cart_count
+from . import views
 
 urlpatterns = [
-    path('add_to_cart/<int:item_id>/', add_to_cart, name='add_to_cart'),
-    path('cart/', cart_count, name='cart_count'),
+    path('', views.cart_count, name='cart_count'),  # Homepage with cart count
+    path('add_to_cart/<int:item_id>/', views.add_to_cart, name='add_to_cart'),  # Add item to cart
 ]
+
 
