@@ -1,32 +1,14 @@
-{ % load static % }
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title> Contact Us </title>
-        <link rel="stylesheet" href="{% static 'home/css/home.css' %}">
-    </head>
-    <body>
-        <h1> Contact Us </h1>
-        <form id="contactForm">
-            <label for="name" >Name:</label><br>
-            <input type="text" id="name" name="name"><br><br>
-            <label for="email">Email:</label><br>
-            <input type="email" id="email" name="email"><br><br>
-            <label for="message">Message:</label><br>
-            <textarea id="message" name="message"></textarea><br><br>
-            <button type="submit">Send</button>
-        </form>
-        <!--Validation Script-->
-        <script>
-            document.getElementById("contactForm").addEventListener("submit",function(event) {
-            const name=document.getElementById("name").value.trim();
-            const email=document.getElementById("email").value.trim();
-            if(name===""|| email=="") {
-            alert("Please fill in both the Name and Email fields");
-            event.prevantDefault();
-            }
-            });
-        </script>
-    </body>
+<head>
+    <title>Contact Us</title>
+</head>
+<body>
+    <h2>Contact Us</h2>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Send</button>
+    </form>
+</body>
 </html>
