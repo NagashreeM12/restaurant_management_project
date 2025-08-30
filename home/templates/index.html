@@ -9,11 +9,18 @@
 <body>
     <h1>Welcome to Our Restaurant!</h1>
 
-    <!-- Display the phone number -->
+    <!-- Display the restaurant logo if it exists -->
+    {% if restaurant.logo %}
+        <img src="{{ restaurant.logo.url }}" alt="Restaurant Logo" width="200">
+    {% else %}
+        <p>No logo available.</p>
+    {% endif %}
+
     <p>Contact Us: {{ phone_number }}</p>
 
 </body>
 </html>
+
 
 
 
