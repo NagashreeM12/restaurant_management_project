@@ -1,10 +1,12 @@
 # urls.py
+# urls.py
 from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('', views.cart_count, name='cart_count'),  # Homepage with cart count
-    path('add_to_cart/<int:item_id>/', views.add_to_cart, name='add_to_cart'),  # Add item to cart
+    path('', views.homepage, name='homepage'),  # Your homepage
+    path('about_us/', views.about_us, name='about_us'),  # Add About Us page
 ]
+
 
 
