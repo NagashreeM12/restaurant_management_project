@@ -1,0 +1,39 @@
+import time
+
+class RateLimiter:
+    def __init__(self, max_requests, time_window):
+        self.max_requests = max_requests
+        self.time_window = time_window  # in seconds
+        self.requests_log = {}  # {user_id: [timestamps]}
+    
+    def is_allowed(self, user_id):
+        current_time = time.time()
+        
+        if user_id not in self.requests_log:
+            self.requests_log[user_id] = []
+        
+        # Keep only requests in the last `time_window`
+        self.requests_log[user_id] = [
+            t for t in self.requests_log[user_id] 
+            if current_time - t < self.time_window
+        ]
+        
+        # Check if user can make request
+        if len(self.requests_log[user_id]) < self.max_requests:
+            self.requests_log[user_id].append(current_time)
+            return True  # Allowed
+        else:
+            return False  # Blocked
+
+
+# ✅ Example usage
+if __name__ == "__main__":
+    limiter = RateLimiter(max_requests=5, time_window=10)  # 5 requests per 10s
+    user = "user_1"
+    
+    for i in range(7):
+        if limiter.is_allowed(user):
+            print(f"Request {i+1} → Allowed ")
+        else:
+            print(f"Request {i+1} → Blocked ")
+        time.sleep(1)  # wait 1s before next request
