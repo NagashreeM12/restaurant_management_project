@@ -1,0 +1,59 @@
+class InMemoryFileStorage:
+    def __init__(self):
+        # Dictionary to hold files (filename -> content)
+        self.storage = {}
+
+    def create_file(self, filename, content):
+        """Creates or overwrites a file in storage."""
+        self.storage[filename] = content
+        print(f"File '{filename}' created successfully.")
+
+    def read_file(self, filename):
+        """Reads content of a file if it exists."""
+        if filename in self.storage:
+            return self.storage[filename]
+        else:
+            print(f"Error: File '{filename}' not found.")
+            return None
+
+    def delete_file(self, filename):
+        """Deletes a file if it exists."""
+        if filename in self.storage:
+            del self.storage[filename]
+            print(f"File '{filename}' deleted successfully.")
+        else:
+            print(f"Error: File '{filename}' not found.")
+
+    def list_files(self):
+        """Lists all stored files."""
+        if self.storage:
+            print("Files in storage:")
+            for filename in self.storage:
+                print(f"- {filename}")
+        else:
+            print("Storage is empty.")
+
+
+# Example usage
+if __name__ == "__main__":
+    fs = InMemoryFileStorage()
+
+    # Create files
+    fs.create_file("profile.txt", "This is user profile data.")
+    fs.create_file("invoice.pdf", "Binary-like PDF content here.")
+
+    # Read files
+    print("\nReading profile.txt:")
+    print(fs.read_file("profile.txt"))
+
+    # List files
+    print("\nListing files:")
+    fs.list_files()
+
+    # Delete a file
+    print("\nDeleting invoice.pdf:")
+    fs.delete_file("invoice.pdf")
+
+    # Try reading deleted file
+    print("\nTrying to read deleted invoice.pdf:")
+    print(fs.read_file("invoice.pdf"))
