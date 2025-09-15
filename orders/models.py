@@ -1,25 +1,22 @@
 from django.db import models
-from django.contrib.auth.models import User
-from products.models import Menu
-# Create your models here.
+from home.models import MenuCategory   # if you use it
+# Import OrderStatus
+from .models import OrderStatus   # if in same app
+# OR: from orders.models import OrderStatus (if OrderStatus is in same file, no need)
+
 class Order(models.Model):
-    STATUS_CHOICES=[
-        ('PENDING','Pending'),
-        ('CONFIRMED','Confirmed'),
-        ('CANCELLED','Cancelled'),
-        ('DELIVERED','Delivered'),
-    ]
-    customer=models.ForeignKey(User,on_delete=models.CASCADE)#Link to User
-    order_items=models.ManyToManyField(Menu,through='OrderItem')
-    total_amount=models.DecimalField(max_digits=8,decimal_places=2)
-    status=models.CharField(max_length=20,choices=STATUS_CHOICES,default='PENDING')
-    created_at=models.DateTimeField(auto_now_add=True)
+    # your existing fields here...
+    customer_name = models.CharField(max_length=100)
+    order_date = models.DateTimeField(auto_now_add=True)
+
+    # New field for order status
+    status = models.ForeignKey(
+        "orders.OrderStatus",   # safer to use string reference
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="orders"
+    )
+
     def __str__(self):
-        return f"Order {self.id} by {self.customer.username}-{self.status}"
-#Intermediate table for order items
-class OrderItem(models.Model):
-    order=models.ForeignKey(Order,on_delete=models.CASCADE)
-    menu_item=models.ForeignKey(Menu,on_delete=models.CASCADE)
-    quantity=models.PositiveIntegerField(default=1)
-    def __str__(self):
-        return f"{self.quantity} x {self.menu_item.name}"
+        return f"Order {self.id} - {self.customer_name}"
