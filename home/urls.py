@@ -1,20 +1,10 @@
 # urls.py
 # urls.py
 # urls.py
-from django.conf import settings
-from django.conf.urls.static import static
 from django.urls import path
-from . import views
+from .views import MenuCategoryListView
 
 urlpatterns = [
-    path('', views.homepage, name='homepage'),
-    # Other URL patterns
+    path('categories/', MenuCategoryListView.as_view(), name='menu-categories'),
 ]
-
-# Serve media files during development
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
-
-
 
