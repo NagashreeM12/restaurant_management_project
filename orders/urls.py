@@ -1,7 +1,7 @@
+# orders/urls.py
 from django.urls import path
-from .views import *
+from .views import OrderHistoryView
 
 urlpatterns = [
-    path("" ,home,name="home"),
-    
+    path('order-history/', OrderHistoryView.as_view(), name='order-history'),
 ]

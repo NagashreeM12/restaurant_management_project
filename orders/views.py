@@ -1,6 +1,14 @@
-from django.shortcuts import render
+# orders/views.py
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+from .models import Order
+from .serializers import OrderSerializer
 
-# Create your views here.
-def home(request):
-    #Render the homepage template that shows the prominent logo
-    return render(request,"home/homepage.html")
+class OrderHistoryView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        orders = Order.objects.filter(user=request.user).order_by('-date')
+        serializer = OrderSerializer(orders, many=True)
+        return Response(serializer.data)
