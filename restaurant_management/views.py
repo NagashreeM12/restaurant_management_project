@@ -1,12 +1,15 @@
+# users/views.py
 from rest_framework.views import APIView
 from rest_framework.response import Response
-class MenuView(APIView):
-    def get(self,request):
-        #Hardcoded menu data
-        menu=[
-            {"name":"Margherita Pizza","description":"Classic cheese and tomato pizza","price":8.99},
-            {"name":"Pasta Alfredo","description":"Creamy Pasta with Alfredo sauce","price":10.50},
-            {"name":"Caesar Salad","description":"Fresh lettuce with Caesar dressing","price":6.75},
-            {"name":"Grilled chicken","description":"Served with veggies and fries","price":12.00},
-        ]
-        return Response(menu)
+from utils.validation_utils import is_valid_email
+
+class EmailCheckView(APIView):
+    def post(self, request):
+        email = request.data.get("email")
+        if not email:
+            return Response({"error": "Email is required"}, status=400)
+
+        if is_valid_email(email):
+            return Response({"message": "Valid email"}, status=200)
+        else:
+            return Response({"error": "Invalid email address"}, status=400)
