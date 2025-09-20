@@ -1,18 +1,25 @@
 # menu/views.py
 # menu/views.py
-from rest_framework.views import APIView
+# menu/views.py
+from rest_framework import viewsets, status
 from rest_framework.response import Response
+from rest_framework.permissions import IsAdminUser
 from .models import MenuItem
 from .serializers import MenuItemSerializer
 
-class MenuItemsByCategoryView(APIView):
-    def get(self, request):
-        category_name = request.query_params.get('category', None)
+class MenuItemViewSet(viewsets.ViewSet):
+    permission_classes = [IsAdminUser]
 
-        if not category_name:
-            return Response({"error": "Category parameter is required"}, status=400)
+    def update(self, request, pk=None):
+        try:
+            menu_item = MenuItem.objects.get(pk=pk)
+        except MenuItem.DoesNotExist:
+            return Response({"error": "Menu item not found"}, status=status.HTTP_404_NOT_FOUND)
 
-        items = MenuItem.objects.filter(category__category_name__iexact=category_name)
-        serializer = MenuItemSerializer(items, many=True)
-        return Response(serializer.data)
+        serializer = MenuItemSerializer(menu_item, data=request.data, partial=False)
 
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
