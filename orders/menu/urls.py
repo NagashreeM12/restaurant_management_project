@@ -1,9 +1,7 @@
 # menu/urls.py
 from django.urls import path
-from rest_framework.routers import DefaultRouter
-from .views import MenuItemSearchViewSet
+from .views import MenuItemsByCategoryView
 
-router = DefaultRouter()
-router.register(r'menu/search', MenuItemSearchViewSet, basename='menu-search')
-
-urlpatterns = router.urls
+urlpatterns = [
+    path('menu-items-by-category/', MenuItemsByCategoryView.as_view(), name='menu-items-by-category'),
+]
