@@ -1,14 +1,10 @@
 # orders/views.py
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
+from rest_framework import generics
 from .models import Order
 from .serializers import OrderSerializer
 
-class OrderHistoryView(APIView):
-    permission_classes = [IsAuthenticated]
+class OrderRetrieveView(generics.RetrieveAPIView):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
+    lookup_field = "order_id"  # use order_id instead of pk
 
-    def get(self, request):
-        orders = Order.objects.filter(user=request.user).order_by('-date')
-        serializer = OrderSerializer(orders, many=True)
-        return Response(serializer.data)
