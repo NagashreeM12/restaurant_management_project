@@ -142,3 +142,15 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 RESTAURANT_NAME="Tasty Bites"
 RESTAURANT_PHONE="+91-9876543210"
+# Example (for development using console backend)
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+DEFAULT_FROM_EMAIL = "noreply@yourstore.com"
+
+# For real SMTP (like Gmail)
+# EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+# EMAIL_HOST = "smtp.gmail.com"
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+# EMAIL_HOST_USER = "your-email@gmail.com"
+# EMAIL_HOST_PASSWORD = "your-app-password"
+# DEFAULT_FROM_EMAIL = EMAIL_HOST_USER

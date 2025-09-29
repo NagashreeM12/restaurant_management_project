@@ -1,10 +1,12 @@
 # orders/views.py
-from rest_framework import generics
-from .models import Order
-from .serializers import OrderSerializer
+from .utils import send_order_confirmation_email
 
-class OrderRetrieveView(generics.RetrieveAPIView):
-    queryset = Order.objects.all()
-    serializer_class = OrderSerializer
-    lookup_field = "order_id"  # use order_id instead of pk
+# After saving order
+send_order_confirmation_email(
+    order_id=order.order_id,
+    customer_email=order.customer.email,
+    customer_name=order.customer.username,
+    total_price=order.total_price,
+)
+
 
