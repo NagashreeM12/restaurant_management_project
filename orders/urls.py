@@ -1,7 +1,7 @@
 # orders/urls.py
 from django.urls import path
-from .views import OrderRetrieveView
+from .views import CouponValidationView
 
 urlpatterns = [
-    path("<int:order_id>/", OrderRetrieveView.as_view(), name="order-retrieve"),
+    path('coupons/validate/', CouponValidationView.as_view(), name='coupon-validate'),
 ]

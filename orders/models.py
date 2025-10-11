@@ -1,12 +1,12 @@
 from django.db import models
+from django.utils import timezone
 
+class Coupon(models.Model):
+    code = models.CharField(max_length=50, unique=True)
+    discount_percentage = models.DecimalField(max_digits=5, decimal_places=2)
+    is_active = models.BooleanField(default=True)
+    valid_from = models.DateField()
+    valid_until = models.DateField()
 
-class ActiveOrderManager(models.Manager):
-    def get_active_orders(self):
-        """
-        Return only orders with status 'pending' or 'processing'.
-        """
-        return self.filter(status__in=['pending', 'processing'])
-
-
-
+    def __str__(self):
+        return f"{self.code} ({self.discount_percentage}% off)"

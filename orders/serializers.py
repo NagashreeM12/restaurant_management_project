@@ -1,20 +1,9 @@
 # orders/serializers.py
 from rest_framework import serializers
-from .models import Order, OrderItem
+from .models import Coupon
 
-class OrderItemSerializer(serializers.ModelSerializer):
-    product_name = serializers.CharField(source="product.name", read_only=True)
-    product_price = serializers.DecimalField(source="product.price", max_digits=10, decimal_places=2, read_only=True)
-
+class CouponSerializer(serializers.ModelSerializer):
     class Meta:
-        model = OrderItem
-        fields = ["product_name", "product_price", "quantity"]
+        model = Coupon
+        fields = ['code', 'discount_percentage', 'is_active', 'valid_from', 'valid_until']
 
-
-class OrderSerializer(serializers.ModelSerializer):
-    customer = serializers.StringRelatedField()  # Shows username/email
-    items = OrderItemSerializer(many=True, read_only=True)
-
-    class Meta:
-        model = Order
-        fields = ["order_id", "customer", "items", "total_price", "created_at"]
