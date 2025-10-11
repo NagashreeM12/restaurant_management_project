@@ -1,10 +1,11 @@
 # urls.py
 # urls.py
-# urls.py
 from django.urls import path
-from .views import MenuCategoryListView
+from .views import TableDetailView
 
 urlpatterns = [
-    path('categories/', MenuCategoryListView.as_view(), name='menu-categories'),
+    # existing URLs...
+    path('api/tables/<int:pk>/', TableDetailView.as_view(), name='table-detail'),
 ]
+
 

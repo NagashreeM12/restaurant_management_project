@@ -1,12 +1,10 @@
-from rest_framework.generics import ListAPIView
-from .models import MenuCategory
-from .serializers import MenuCategorySerializer
+from rest_framework import generics
+from .models import Table
+from .serializers import TableSerializer
 
-class MenuCategoryListView(ListAPIView):
-    queryset = MenuCategory.objects.all()
-    serializer_class = MenuCategorySerializer
-
-
+class TableDetailView(generics.RetrieveAPIView):
+    queryset = Table.objects.all()
+    serializer_class = TableSerializer
 
 
 
