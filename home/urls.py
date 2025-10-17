@@ -1,8 +1,8 @@
 # urls.py
+# home/urls.py
 from django.urls import path
-from .views import AvailableTablesAPIView
+from .views import ContactFormSubmissionView
 
 urlpatterns = [
-    # other API routes...
-    path('api/tables/available/', AvailableTablesAPIView.as_view(), name='available_tables_api'),
+    path('contact/', ContactFormSubmissionView.as_view(), name='contact-form'),
 ]

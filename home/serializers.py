@@ -1,7 +1,8 @@
+# home/serializers.py
 from rest_framework import serializers
-from .models import Table
+from .models import ContactFormSubmission
 
-class TableSerializer(serializers.ModelSerializer):
+class ContactFormSubmissionSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Table
-        fields = ['id', 'table_number', 'capacity', 'is_available']
+        model = ContactFormSubmission
+        fields = ['id', 'name', 'email', 'message', 'created_at']
