@@ -1,49 +1,31 @@
-from django.core.mail import send_mail, BadHeaderError
-from django.conf import settings
-import logging
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from .models import Order
+from home.utils import send_custom_email  # Import the utility
 
-# Get Django's logger
-logger = logging.getLogger(__name__)
+class CancelOrderView(APIView):
+    def delete(self, request, order_id):
+        try:
+            order = Order.objects.get(id=order_id)
+        except Order.DoesNotExist:
+            return Response({"error": "Order not found."}, status=status.HTTP_404_NOT_FOUND)
 
-def send_order_confirmation_email(order_id, customer_email, customer_name, total_price):
-    """
-    Sends an order confirmation email to the customer.
+        if order.status in ['Completed', 'Cancelled']:
+            return Response({"message": f"Cannot cancel a {order.status.lower()} order."},
+                            status=status.HTTP_400_BAD_REQUEST)
 
-    Args:
-        order_id (int): The ID of the order.
-        customer_email (str): The customer's email address.
-        customer_name (str): The name of the customer.
-        total_price (Decimal/float): The total price of the order.
+        order.status = 'Cancelled'
+        order.save()
 
-    Returns:
-        bool: True if email sent successfully, False otherwise.
-    """
-
-    subject = f"Order Confirmation - Order #{order_id}"
-    message = (
-        f"Hello {customer_name},\n\n"
-        f"Thank you for your purchase!\n"
-        f"Your order with ID #{order_id} has been successfully placed.\n"
-        f"Total Amount: ₹{total_price}\n\n"
-        f"You will receive another email once your order is shipped.\n\n"
-        f"Best regards,\n"
-        f"Our Store Team"
-    )
-
-    try:
-        send_mail(
-            subject,
-            message,
-            settings.DEFAULT_FROM_EMAIL,  # from email (set in settings.py)
-            [customer_email],            # recipient list
-            fail_silently=False,         # raise error if sending fails
+        # Send notification email
+        email_response = send_custom_email(
+            to_email="customer@example.com",
+            subject=f"Order #{order.id} Cancelled",
+            message=f"Dear {order.customer_name}, your order #{order.id} has been cancelled successfully."
         )
-        logger.info(f"Order confirmation email sent to {customer_email} for order {order_id}.")
-        return True
 
-    except BadHeaderError:
-        logger.error("Invalid header found while sending email.")
-        return False
-    except Exception as e:
-        logger.error(f"Error sending order confirmation email: {e}")
-        return False
+        return Response({
+            "message": "Order cancelled successfully.",
+            "email_status": email_response
+        }, status=status.HTTP_200_OK)

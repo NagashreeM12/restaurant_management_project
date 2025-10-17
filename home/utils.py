@@ -1,29 +1,36 @@
 # home/utils.py
+from django.core.mail import send_mail, BadHeaderError
+from django.core.exceptions import ValidationError
+from django.core.validators import validate_email
+from django.conf import settings
 
-from datetime import datetime, time
-
-def is_restaurant_open():
+def send_custom_email(to_email, subject, message):
     """
-    Returns True if the restaurant is open based on the current day and time,
-    otherwise returns False.
+    Utility function to send an email.
+    Args:
+        to_email (str): Recipient's email address
+        subject (str): Subject line
+        message (str): Body of the email
     """
+    try:
+        # Validate email
+        validate_email(to_email)
 
-    now = datetime.now()  # Get current date and time
-    current_day = now.strftime("%A")  # e.g., 'Monday', 'Tuesday'
-    current_time = now.time()
+        # Send email
+        send_mail(
+            subject=subject,
+            message=message,
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=[to_email],
+            fail_silently=False,
+        )
+        return {"success": True, "message": "Email sent successfully."}
 
-    # Define restaurant working hours (you can customize)
-    # Example: open 9 AM to 10 PM daily
-    opening_time = time(9, 0)   # 09:00 AM
-    closing_time = time(22, 0)  # 10:00 PM
+    except ValidationError:
+        return {"success": False, "error": "Invalid email address."}
 
-    # Optional: Different hours for weekends
-    # if current_day in ['Saturday', 'Sunday']:
-    #     opening_time = time(10, 0)
-    #     closing_time = time(23, 0)
+    except BadHeaderError:
+        return {"success": False, "error": "Invalid header found."}
 
-    # Check if current time is within opening hours
-    if opening_time <= current_time <= closing_time:
-        return True
-    else:
-        return False
+    except Exception as e:
+        return {"success": False, "error": str(e)}

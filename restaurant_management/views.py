@@ -12,4 +12,4 @@ class EmailCheckView(APIView):
         if is_valid_email(email):
             return Response({"message": "Valid email"}, status=200)
         else:
-            return Response({"error": "Invalid email address"}, status=400)
+            return Response({"error": "Invalid email address"})
