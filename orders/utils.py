@@ -1,31 +1,21 @@
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
+import secrets
+import string
 from .models import Order
-from home.utils import send_custom_email  # Import the utility
 
-class CancelOrderView(APIView):
-    def delete(self, request, order_id):
-        try:
-            order = Order.objects.get(id=order_id)
-        except Order.DoesNotExist:
-            return Response({"error": "Order not found."}, status=status.HTTP_404_NOT_FOUND)
+def generate_unique_order_id(length=8):
+    """
+    Generates a unique alphanumeric order ID.
+    Ensures that the generated ID does not already exist in the database.
+    
+    Args:
+        length (int): Length of the generated ID (default is 8)
+    
+    Returns:
+        str: A unique order ID
+    """
+    characters = string.ascii_uppercase + string.digits  # e.g., ABC123
+    while True:
+        order_id = ''.join(secrets.choice(characters) for _ in range(length))
+        if not Order.objects.filter(unique_id=order_id).exists():
+            return order_id
 
-        if order.status in ['Completed', 'Cancelled']:
-            return Response({"message": f"Cannot cancel a {order.status.lower()} order."},
-                            status=status.HTTP_400_BAD_REQUEST)
-
-        order.status = 'Cancelled'
-        order.save()
-
-        # Send notification email
-        email_response = send_custom_email(
-            to_email="customer@example.com",
-            subject=f"Order #{order.id} Cancelled",
-            message=f"Dear {order.customer_name}, your order #{order.id} has been cancelled successfully."
-        )
-
-        return Response({
-            "message": "Order cancelled successfully.",
-            "email_status": email_response
-        }, status=status.HTTP_200_OK)
