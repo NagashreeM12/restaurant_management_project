@@ -1,9 +1,10 @@
 # orders/serializers.py
+# orders/serializers.py
 from rest_framework import serializers
-from .models import Coupon
+from .models import Order
 
-class CouponSerializer(serializers.ModelSerializer):
+class OrderSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Coupon
-        fields = ['code', 'discount_percentage', 'is_active', 'valid_from', 'valid_until']
+        model = Order
+        fields = ['id', 'customer_name', 'status', 'created_at']
 

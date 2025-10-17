@@ -1,34 +1,30 @@
 # orders/views.py
+# orders/views.py
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from django.utils import timezone
-from .models import Coupon
-from .serializers import CouponSerializer
+from .models import Order
+from .serializers import OrderSerializer
 
-class CouponValidationView(APIView):
-    def post(self, request):
-        code = request.data.get('code')
+class CancelOrderView(APIView):
+    """
+    API endpoint to cancel an order by ID.
+    """
 
-        if not code:
-            return Response({'error': 'Coupon code is required.'}, status=status.HTTP_400_BAD_REQUEST)
-
+    def delete(self, request, order_id):
         try:
-            coupon = Coupon.objects.get(code=code)
-        except Coupon.DoesNotExist:
-            return Response({'error': 'Invalid coupon code.'}, status=status.HTTP_400_BAD_REQUEST)
+            order = Order.objects.get(id=order_id)
+        except Order.DoesNotExist:
+            return Response({"error": "Order not found."}, status=status.HTTP_404_NOT_FOUND)
 
-        # Validate coupon status and date range
-        today = timezone.now().date()
-        if not coupon.is_active:
-            return Response({'error': 'This coupon is not active.'}, status=status.HTTP_400_BAD_REQUEST)
-        if today < coupon.valid_from or today > coupon.valid_until:
-            return Response({'error': 'This coupon is expired or not yet valid.'}, status=status.HTTP_400_BAD_REQUEST)
+        if order.status in ['Completed', 'Cancelled']:
+            return Response({"message": f"Cannot cancel a {order.status.lower()} order."},
+                            status=status.HTTP_400_BAD_REQUEST)
 
-        # If valid, return success response
-        return Response({
-            'success': True,
-            'code': coupon.code,
-            'discount_percentage': coupon.discount_percentage
-        }, status=status.HTTP_200_OK)
+        # Update status
+        order.status = 'Cancelled'
+        order.save()
 
+        serializer = OrderSerializer(order)
+        return Response({"message": "Order cancelled successfully.", "order": serializer.data},
+                        status=status.HTTP_200_OK)

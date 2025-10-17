@@ -1,7 +1,8 @@
 # orders/urls.py
+# orders/urls.py
 from django.urls import path
-from .views import CouponValidationView
+from .views import CancelOrderView
 
 urlpatterns = [
-    path('coupons/validate/', CouponValidationView.as_view(), name='coupon-validate'),
+    path('orders/<int:order_id>/cancel/', CancelOrderView.as_view(), name='cancel-order'),
 ]
