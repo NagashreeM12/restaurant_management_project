@@ -1,8 +1,8 @@
 # home/serializers.py
 from rest_framework import serializers
-from .models import ContactFormSubmission
+from .models import MenuItem
 
-class ContactFormSubmissionSerializer(serializers.ModelSerializer):
+class MenuItemSerializer(serializers.ModelSerializer):
     class Meta:
-        model = ContactFormSubmission
-        fields = ['id', 'name', 'email', 'message', 'created_at']
+        model = MenuItem
+        fields = ['id', 'name', 'description', 'price', 'is_daily_special']
