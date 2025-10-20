@@ -1,30 +1,44 @@
-# orders/views.py
-# orders/views.py
-from rest_framework.views import APIView
+from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from .models import Order
-from .serializers import OrderSerializer
+from .serializers import OrderStatusUpdateSerializer
 
-class CancelOrderView(APIView):
+@api_view(['POST'])
+def update_order_status(request):
     """
-    API endpoint to cancel an order by ID.
+    API endpoint to update an order's status.
+    Expected JSON:
+    {
+        "order_id": "ORD123",
+        "status": "Delivered"
+    }
     """
+    serializer = OrderStatusUpdateSerializer(data=request.data)
 
-    def delete(self, request, order_id):
+    if serializer.is_valid():
+        order_id = serializer.validated_data['order_id']
+        new_status = serializer.validated_data['status']
+
         try:
-            order = Order.objects.get(id=order_id)
+            order = Order.objects.get(order_id=order_id)
         except Order.DoesNotExist:
-            return Response({"error": "Order not found."}, status=status.HTTP_404_NOT_FOUND)
+            return Response(
+                {"error": f"Order with ID '{order_id}' not found."},
+                status=status.HTTP_404_NOT_FOUND
+            )
 
-        if order.status in ['Completed', 'Cancelled']:
-            return Response({"message": f"Cannot cancel a {order.status.lower()} order."},
-                            status=status.HTTP_400_BAD_REQUEST)
-
-        # Update status
-        order.status = 'Cancelled'
+        # Update order status
+        order.status = new_status
         order.save()
 
-        serializer = OrderSerializer(order)
-        return Response({"message": "Order cancelled successfully.", "order": serializer.data},
-                        status=status.HTTP_200_OK)
+        return Response(
+            {
+                "message": "Order status updated successfully.",
+                "order_id": order.order_id,
+                "new_status": order.status,
+            },
+            status=status.HTTP_200_OK,
+        )
+
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

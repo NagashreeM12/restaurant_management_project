@@ -3,8 +3,6 @@
 from rest_framework import serializers
 from .models import Order
 
-class OrderSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Order
-        fields = ['id', 'customer_name', 'status', 'created_at']
-
+class OrderStatusUpdateSerializer(serializers.Serializer):
+    order_id = serializers.CharField(max_length=50)
+    status = serializers.ChoiceField(choices=[choice[0] for choice in Order.STATUS_CHOICES])
