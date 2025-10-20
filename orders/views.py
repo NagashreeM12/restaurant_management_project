@@ -4,41 +4,30 @@ from rest_framework import status
 from .models import Order
 from .serializers import OrderStatusUpdateSerializer
 
-@api_view(['POST'])
-def update_order_status(request):
+@api_view(['PUT'])
+def update_order_status(request, order_id):
     """
-    API endpoint to update an order's status.
-    Expected JSON:
-    {
-        "order_id": "ORD123",
-        "status": "Delivered"
-    }
+    API endpoint to update an existing order's status.
+    URL: /orders/<order_id>/update-status/
     """
-    serializer = OrderStatusUpdateSerializer(data=request.data)
+    try:
+        order = Order.objects.get(id=order_id)
+    except Order.DoesNotExist:
+        return Response(
+            {"error": f"Order with ID {order_id} not found."},
+            status=status.HTTP_404_NOT_FOUND
+        )
 
+    serializer = OrderStatusUpdateSerializer(order, data=request.data, partial=True)
     if serializer.is_valid():
-        order_id = serializer.validated_data['order_id']
-        new_status = serializer.validated_data['status']
-
-        try:
-            order = Order.objects.get(order_id=order_id)
-        except Order.DoesNotExist:
-            return Response(
-                {"error": f"Order with ID '{order_id}' not found."},
-                status=status.HTTP_404_NOT_FOUND
-            )
-
-        # Update order status
-        order.status = new_status
-        order.save()
-
+        serializer.save()
         return Response(
             {
                 "message": "Order status updated successfully.",
-                "order_id": order.order_id,
-                "new_status": order.status,
+                "order_id": order.id,
+                "new_status": serializer.data['status']
             },
-            status=status.HTTP_200_OK,
+            status=status.HTTP_200_OK
         )
 
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
