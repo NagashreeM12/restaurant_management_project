@@ -1,21 +1,33 @@
-import secrets
-import string
+import logging
+from django.core.exceptions import ObjectDoesNotExist
 from .models import Order
 
-def generate_unique_order_id(length=8):
+# Configure logger
+logger = logging.getLogger(__name__)
+
+def update_order_status(order_id, new_status):
     """
-    Generates a unique alphanumeric order ID.
-    Ensures that the generated ID does not already exist in the database.
-    
+    Reusable function to update the status of an order.
     Args:
-        length (int): Length of the generated ID (default is 8)
-    
+        order_id (int): ID of the order to update
+        new_status (str): New status to set (e.g., 'pending', 'processing', 'completed')
     Returns:
-        str: A unique order ID
+        str: Success or error message
     """
-    characters = string.ascii_uppercase + string.digits  # e.g., ABC123
-    while True:
-        order_id = ''.join(secrets.choice(characters) for _ in range(length))
-        if not Order.objects.filter(unique_id=order_id).exists():
-            return order_id
+    try:
+        order = Order.objects.get(id=order_id)
+        old_status = order.status
+        order.status = new_status
+        order.save()
+
+        logger.info(f"Order #{order_id} status updated from '{old_status}' to '{new_status}'.")
+        return f"Order #{order_id} status successfully updated to '{new_status}'."
+
+    except ObjectDoesNotExist:
+        logger.error(f"Order with ID {order_id} not found.")
+        return f"Error: Order with ID {order_id} not found."
+
+    except Exception as e:
+        logger.error(f"Unexpected error updating order #{order_id}: {e}")
+        return f"Error updating order #{order_id}: {e}"
 
