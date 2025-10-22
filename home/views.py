@@ -1,14 +1,8 @@
 # home/views.py
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-from rest_framework import status
-from .models import MenuItem
-from .serializers import MenuItemSerializer
+from rest_framework import viewsets
+from .models import MenuCategory
+from .serializers import MenuCategorySerializer
 
-@api_view(['GET'])
-def daily_specials(request):
-    """Retrieve all menu items marked as daily specials."""
-    specials = MenuItem.objects.filter(is_daily_special=True)
-    serializer = MenuItemSerializer(specials, many=True)
-    return Response(serializer.data, status=status.HTTP_200_OK)
-
+class MenuCategoryViewSet(viewsets.ModelViewSet):
+    queryset = MenuCategory.objects.all()
+    serializer_class = MenuCategorySerializer
