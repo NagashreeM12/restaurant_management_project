@@ -1,8 +1,8 @@
 # orders/urls.py
 # orders/urls.py
 from django.urls import path
-from . import views
+from .views import get_order_status
 
 urlpatterns = [
-    path('<int:order_id>/update-status/', views.update_order_status, name='update-order-status'),
+    path('orders/<int:order_id>/status/', get_order_status, name='get-order-status'),
 ]

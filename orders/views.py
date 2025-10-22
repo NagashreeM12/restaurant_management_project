@@ -2,32 +2,25 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from .models import Order
-from .serializers import OrderStatusUpdateSerializer
 
-@api_view(['PUT'])
-def update_order_status(request, order_id):
+@api_view(['GET'])
+def get_order_status(request, order_id):
     """
-    API endpoint to update an existing order's status.
-    URL: /orders/<order_id>/update-status/
+    Retrieve the current status of an order given its ID.
     """
     try:
         order = Order.objects.get(id=order_id)
+        return Response({
+            "order_id": order.id,
+            "status": order.status
+        }, status=status.HTTP_200_OK)
+    
     except Order.DoesNotExist:
-        return Response(
-            {"error": f"Order with ID {order_id} not found."},
-            status=status.HTTP_404_NOT_FOUND
-        )
-
-    serializer = OrderStatusUpdateSerializer(order, data=request.data, partial=True)
-    if serializer.is_valid():
-        serializer.save()
-        return Response(
-            {
-                "message": "Order status updated successfully.",
-                "order_id": order.id,
-                "new_status": serializer.data['status']
-            },
-            status=status.HTTP_200_OK
-        )
-
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response({
+            "error": f"Order with ID {order_id} not found."
+        }, status=status.HTTP_404_NOT_FOUND)
+    
+    except Exception as e:
+        return Response({
+            "error": f"An error occurred: {str(e)}"
+        }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
