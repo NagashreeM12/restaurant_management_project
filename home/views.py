@@ -1,8 +1,22 @@
 # home/views.py
-from rest_framework import viewsets
-from .models import MenuCategory
-from .serializers import MenuCategorySerializer
+from rest_framework import generics, permissions
+from .models import UserReview
+from .serializers import UserReviewSerializer
 
-class MenuCategoryViewSet(viewsets.ModelViewSet):
-    queryset = MenuCategory.objects.all()
-    serializer_class = MenuCategorySerializer
+# Create a new review
+class UserReviewCreateView(generics.CreateAPIView):
+    queryset = UserReview.objects.all()
+    serializer_class = UserReviewSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+
+# Retrieve reviews for a specific menu item
+class MenuItemReviewListView(generics.ListAPIView):
+    serializer_class = UserReviewSerializer
+
+    def get_queryset(self):
+        menu_item_id = self.kwargs.get('menu_item_id')
+        return UserReview.objects.filter(menu_item_id=menu_item_id)
