@@ -1,19 +1,19 @@
 # home/utils.py
-def calculate_discount(original_price, discount_percentage):
+import re
+
+def is_valid_email(email):
     """
-    Calculates the discounted price for a menu item.
+    Validates an email address using a regular expression.
 
     Args:
-        original_price (float or int): Original price of the item.
-        discount_percentage (float or int): Discount percentage (0-100).
+        email (str): Email address to validate.
 
     Returns:
-        float: Discounted price, rounded to 2 decimal places.
-               Returns original_price if inputs are invalid.
+        bool: True if email is valid, False otherwise.
     """
-    try:
-        if original_price < 0 or discount_percentage < 0 or discount_percentage > 100:
-            return original_price  # Invalid input, return original price
+    if not isinstance(email, str):
+        return False
 
-        discount_amount = (discount_percentage / 100) * original_price
-        discounted_price = original_price - discount_amount
+    # Basic regex pattern for validating emails
+    pattern = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
+    return bool(re.match(pattern, email))
