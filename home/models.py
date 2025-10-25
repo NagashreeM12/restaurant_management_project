@@ -3,20 +3,17 @@
 # home/models.py
 from django.db import models
 
-class OpeningHour(models.Model):
-    DAYS_OF_WEEK = [
-        ('Mon', 'Monday'),
-        ('Tue', 'Tuesday'),
-        ('Wed', 'Wednesday'),
-        ('Thu', 'Thursday'),
-        ('Fri', 'Friday'),
-        ('Sat', 'Saturday'),
-        ('Sun', 'Sunday'),
+class Order(models.Model):
+    STATUS_CHOICES = [
+        ('Pending', 'Pending'),
+        ('Processing', 'Processing'),
+        ('Completed', 'Completed'),
+        ('Cancelled', 'Cancelled'),
     ]
 
-    day = models.CharField(max_length=3, choices=DAYS_OF_WEEK, unique=True)
-    open_time = models.TimeField()
-    close_time = models.TimeField()
+    unique_id = models.CharField(max_length=20, unique=True)  # short unique ID
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='Pending')
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.get_day_display()}: {self.open_time} - {self.close_time}"
+        return f"Order {self.unique_id} - {self.status}"

@@ -1,8 +1,8 @@
 # home/serializersfrom rest_framework import serializers
 from rest_framework import serializers
-from .models import OpeningHour
+from .models import Order
 
-class OpeningHourSerializer(serializers.ModelSerializer):
+class OrderStatusSerializer(serializers.ModelSerializer):
     class Meta:
-        model = OpeningHour
-        fields = ['day', 'open_time', 'close_time']
+        model = Order
+        fields = ['unique_id', 'status']
