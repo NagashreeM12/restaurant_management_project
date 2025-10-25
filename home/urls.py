@@ -1,10 +1,6 @@
-from django.urls import path, include
-from rest_framework.routers import DefaultRouter
-from .views import MenuCategoryViewSet
-
-router = DefaultRouter()
-router.register(r'menu-categories', MenuCategoryViewSet, basename='menu-category')
+from django.urls import path
+from .views import MenuCategoryListAPIView
 
 urlpatterns = [
-    path('api/', include(router.urls)),
+    path('api/menu-categories/', MenuCategoryListAPIView.as_view(), name='menu-categories-list'),
 ]

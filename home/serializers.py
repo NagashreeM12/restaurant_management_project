@@ -5,4 +5,5 @@ from .models import MenuCategory
 class MenuCategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = MenuCategory
-        fields = ['id', 'name', 'description']
+        fields = ['id', 'name']
+

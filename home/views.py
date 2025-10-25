@@ -1,11 +1,10 @@
-from rest_framework import viewsets
+from rest_framework import generics
 from .models import MenuCategory
 from .serializers import MenuCategorySerializer
 
-class MenuCategoryViewSet(viewsets.ModelViewSet):
+class MenuCategoryListAPIView(generics.ListAPIView):
     """
-    CRUD API for MenuCategory
+    GET API endpoint to list all menu categories.
     """
     queryset = MenuCategory.objects.all()
     serializer_class = MenuCategorySerializer
-
