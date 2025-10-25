@@ -1,8 +1,14 @@
 from rest_framework import generics
 from .models import MenuItem
-from .serializers import MenuItemSerializer
+from .serializers import IngredientSerializer
 
-class FeaturedMenuItemList(generics.ListAPIView):
-    queryset = MenuItem.objects.filter(is_featured=True)
-    serializer_class = MenuItemSerializer
+class MenuItemIngredientsList(generics.RetrieveAPIView):
+    queryset = MenuItem.objects.all()
+    serializer_class = IngredientSerializer
+
+    def get(self, request, *args, **kwargs):
+        menu_item = self.get_object()
+        ingredients = menu_item.ingredients.all()
+        serializer = IngredientSerializer(ingredients, many=True)
+        return Response(serializer.data)
 
