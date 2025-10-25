@@ -1,8 +1,8 @@
 # home/serializersfrom rest_framework import serializers
 from rest_framework import serializers
-from .models import MenuItem
+from .models import OpeningHour
 
-class MenuItemSearchSerializer(serializers.ModelSerializer):
+class OpeningHourSerializer(serializers.ModelSerializer):
     class Meta:
-        model = MenuItem
-        fields = ['id', 'name', 'image']
+        model = OpeningHour
+        fields = ['day', 'open_time', 'close_time']

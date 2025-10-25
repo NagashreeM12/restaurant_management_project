@@ -3,11 +3,20 @@
 # home/models.py
 from django.db import models
 
-class MenuItem(models.Model):
-    name = models.CharField(max_length=255)
-    price = models.DecimalField(max_digits=6, decimal_places=2)
-    image = models.ImageField(upload_to='menu_items/', blank=True, null=True)
-    is_available = models.BooleanField(default=True)
+class OpeningHour(models.Model):
+    DAYS_OF_WEEK = [
+        ('Mon', 'Monday'),
+        ('Tue', 'Tuesday'),
+        ('Wed', 'Wednesday'),
+        ('Thu', 'Thursday'),
+        ('Fri', 'Friday'),
+        ('Sat', 'Saturday'),
+        ('Sun', 'Sunday'),
+    ]
+
+    day = models.CharField(max_length=3, choices=DAYS_OF_WEEK, unique=True)
+    open_time = models.TimeField()
+    close_time = models.TimeField()
 
     def __str__(self):
-        return self.name
+        return f"{self.get_day_display()}: {self.open_time} - {self.close_time}"

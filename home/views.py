@@ -1,17 +1,10 @@
 from rest_framework import generics
-from rest_framework.response import Response
-from rest_framework import status
-from .models import MenuItem
-from .serializers import MenuItemSearchSerializer
+from .models import OpeningHour
+from .serializers import OpeningHourSerializer
 
-class MenuItemSearchAPIView(generics.ListAPIView):
+class OpeningHoursListAPIView(generics.ListAPIView):
     """
-    GET API endpoint to search for menu items by name (case-insensitive).
+    GET API endpoint to retrieve restaurant opening hours.
     """
-    serializer_class = MenuItemSearchSerializer
-
-    def get_queryset(self):
-        query = self.request.GET.get('q', '')
-        if query:
-            return MenuItem.objects.filter(name__icontains=query)
-        return MenuItem.objects.none()
+    queryset = OpeningHour.objects.all().order_by('day')
+    serializer_class = OpeningHourSerializer
