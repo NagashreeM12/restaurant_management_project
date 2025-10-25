@@ -1,9 +1,8 @@
-# home/serializers.py
+# home/serializers
 from rest_framework import serializers
-from .models import Restaurant
+from .models import MenuCategory
 
-class RestaurantSerializer(serializers.ModelSerializer):
+class MenuCategorySerializer(serializers.ModelSerializer):
     class Meta:
-        model = Restaurant
-        fields = ['id', 'name', 'address', 'phone_number', 'email', 'opening_hours', 'is_active']
-
+        model = MenuCategory
+        fields = ['id', 'name', 'description']
