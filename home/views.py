@@ -1,15 +1,17 @@
-from rest_framework import generics, status
+from rest_framework import generics
 from rest_framework.response import Response
+from rest_framework import status
 from .models import MenuItem
-from .serializers import MenuItemAvailabilitySerializer
+from .serializers import MenuItemSearchSerializer
 
-class MenuItemAvailabilityUpdateAPIView(generics.UpdateAPIView):
+class MenuItemSearchAPIView(generics.ListAPIView):
     """
-    API endpoint to update availability of a menu item.
+    GET API endpoint to search for menu items by name (case-insensitive).
     """
-    queryset = MenuItem.objects.all()
-    serializer_class = MenuItemAvailabilitySerializer
-    lookup_field = 'id'
+    serializer_class = MenuItemSearchSerializer
 
-    def patch(self, request, *args, **kwargs):
-        return self.update(request, *args, **kwargs)
+    def get_queryset(self):
+        query = self.request.GET.get('q', '')
+        if query:
+            return MenuItem.objects.filter(name__icontains=query)
+        return MenuItem.objects.none()
