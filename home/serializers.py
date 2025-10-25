@@ -1,9 +1,8 @@
-# home/serializers
-from rest_framework import serializers
-from .models import MenuCategory
+# home/serializersfrom rest_framework import serializers
+from .models import Review
 
-class MenuCategorySerializer(serializers.ModelSerializer):
+class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
-        model = MenuCategory
-        fields = ['id', 'name']
-
+        model = Review
+        fields = ['id', 'user', 'rating', 'text', 'created_at']
+        read_only_fields = ['id', 'created_at']

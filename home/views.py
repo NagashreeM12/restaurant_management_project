@@ -1,10 +1,12 @@
 from rest_framework import generics
-from .models import MenuCategory
-from .serializers import MenuCategorySerializer
+from rest_framework.permissions import IsAuthenticated
+from .models import Review
+from .serializers import ReviewSerializer
 
-class MenuCategoryListAPIView(generics.ListAPIView):
+class ReviewCreateAPIView(generics.CreateAPIView):
     """
-    GET API endpoint to list all menu categories.
+    API endpoint for creating user reviews.
     """
-    queryset = MenuCategory.objects.all()
-    serializer_class = MenuCategorySerializer
+    queryset = Review.objects.all()
+    serializer_class = ReviewSerializer
+    permission_classes = [IsAuthenticated]  # Only authenticated users can post reviews
