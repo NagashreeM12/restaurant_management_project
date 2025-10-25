@@ -1,8 +1,8 @@
 # home/serializersfrom rest_framework import serializers
-from .models import Review
+from rest_framework import serializers
+from .models import MenuItem
 
-class ReviewSerializer(serializers.ModelSerializer):
+class MenuItemAvailabilitySerializer(serializers.ModelSerializer):
     class Meta:
-        model = Review
-        fields = ['id', 'user', 'rating', 'text', 'created_at']
-        read_only_fields = ['id', 'created_at']
+        model = MenuItem
+        fields = ['id', 'is_available']

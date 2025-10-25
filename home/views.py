@@ -1,12 +1,15 @@
-from rest_framework import generics
-from rest_framework.permissions import IsAuthenticated
-from .models import Review
-from .serializers import ReviewSerializer
+from rest_framework import generics, status
+from rest_framework.response import Response
+from .models import MenuItem
+from .serializers import MenuItemAvailabilitySerializer
 
-class ReviewCreateAPIView(generics.CreateAPIView):
+class MenuItemAvailabilityUpdateAPIView(generics.UpdateAPIView):
     """
-    API endpoint for creating user reviews.
+    API endpoint to update availability of a menu item.
     """
-    queryset = Review.objects.all()
-    serializer_class = ReviewSerializer
-    permission_classes = [IsAuthenticated]  # Only authenticated users can post reviews
+    queryset = MenuItem.objects.all()
+    serializer_class = MenuItemAvailabilitySerializer
+    lookup_field = 'id'
+
+    def patch(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)

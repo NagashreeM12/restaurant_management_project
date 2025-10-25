@@ -2,13 +2,11 @@
 # models.py
 # home/models.py
 from django.db import models
-from django.contrib.auth.models import User
 
-class Review(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    rating = models.PositiveIntegerField()  # e.g., 1 to 5
-    text = models.TextField()
-    created_at = models.DateTimeField(auto_now_add=True)
+class MenuItem(models.Model):
+    name = models.CharField(max_length=255)
+    price = models.DecimalField(max_digits=6, decimal_places=2)
+    is_available = models.BooleanField(default=True)
 
     def __str__(self):
-        return f"{self.user.username} - {self.rating}"
+        return self.name
